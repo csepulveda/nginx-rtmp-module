@@ -540,8 +540,8 @@ ngx_rtmp_hls_write_playlist(ngx_rtmp_session_t *s)
         return NGX_ERROR;
     }
 
-    sep = hacf->nested ? (hacf->base_url.len ? "/" : "") : "-";
-    key_sep = hacf->nested ? (hacf->key_url.len ? "/" : "") : "-";
+    sep = hacf->nested ? (hacf->base_url.len ? "/" : "") : "_";
+    key_sep = hacf->nested ? (hacf->key_url.len ? "/" : "") : "_";
 
     name_part.len = 0;
     if (!hacf->nested || hacf->base_url.len) {
@@ -1367,7 +1367,7 @@ ngx_rtmp_hls_publish(ngx_rtmp_session_t *s, ngx_rtmp_publish_t *v)
                                   sizeof(".ts"));
 
     ngx_memcpy(ctx->stream.data, ctx->playlist.data, ctx->stream.len - 1);
-    ctx->stream.data[ctx->stream.len - 1] = (hacf->nested ? '/' : '-');
+    ctx->stream.data[ctx->stream.len - 1] = (hacf->nested ? '/' : '_');
 
     /* varint playlist path */
 
@@ -1454,7 +1454,7 @@ ngx_rtmp_hls_publish(ngx_rtmp_session_t *s, ngx_rtmp_publish_t *v)
         }
 
         p = ngx_cpymem(p, ctx->name.data, ctx->name.len);
-        *p++ = (hacf->nested ? '/' : '-');
+        *p++ = (hacf->nested ? '/' : '_');
 
         ctx->keyfile.len = p - ctx->keyfile.data;
     }
